@@ -1,7 +1,10 @@
-<div class="container">
-  <h1 class="title">
-    {{ 'PAGES.HOME.TITLE' | translate }}
-  </h1>
+<mat-grid-list cols="3" rowHeight="100px">
+    <mat-grid-tile *ngFor="let tile of tiles" [colspan]="tile.cols" [rowspan]="tile.rows" [style.background]="tile.color">
+        <span *ngIf="tile.button == false"><H1>{{tile.text}}</H1></span>
+        <button style="width:200px" *ngIf="!(tile.button == false)" [routerLink]="tile.routeLink" mat-raised-button>{{tile.text}}</button>
+    </mat-grid-tile>
+</mat-grid-list>
 
-  <a routerLink="/detail">{{ 'PAGES.HOME.GO_TO_DETAIL' | translate }}</a>
+<div style="text-align: right;">
+    {{ 'COMMON.MYCOMPANY' | translate }}
 </div>
