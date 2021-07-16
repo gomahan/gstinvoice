@@ -2,6 +2,9 @@ import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as url from 'url';
+import { MybusinessIPC } from './ipc/mybusiness.ipc';
+import { createConnection } from 'typeorm';
+import { Mybusiness } from '../src/assets/model/mybusiness.schema';
 
 // Initialize remote module
 require('@electron/remote/main').initialize();
@@ -10,11 +13,22 @@ let win: BrowserWindow = null;
 const args = process.argv.slice(1),
   serve = args.some(val => val === '--serve');
 
-function createWindow(): BrowserWindow {
+  async function createWindow(): Promise<BrowserWindow> {
 
   const electronScreen = screen;
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
+  const connection = await createConnection({
+    type: 'sqlite',
+    synchronize: true,
+    logging: true,
+    logger: 'simple-console',
+    database: './src/assets/data/database.sqlite',
+    entities: [ Mybusiness ],
+  });
+
+  new MybusinessIPC(connection).listen();
+  
   // Create the browser window.
   win = new BrowserWindow({
     x: 0,
