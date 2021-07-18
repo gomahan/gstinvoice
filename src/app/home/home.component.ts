@@ -10,7 +10,6 @@ export class HomeComponent implements OnInit {
 
   tiles: Tile[] = [
     {text: 'GST Invoice', cols: 3, rows: 1, color: 'lightgreen',button:false},
-    {text: '', cols: 3, rows: 1, color: 'white',button:false},
     {text: 'My Business', cols: 1, rows: 1, color: 'lightgreen',routeLink:'/Mybusiness'},
     {text: 'My Business Bank', cols: 1, rows: 1, color: 'lightgreen'},
     {text: 'Our GST Info', cols: 1, rows: 1, color: 'lightgreen'},

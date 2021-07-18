@@ -1,60 +1,57 @@
-<mat-grid-list cols="2" rowHeight="150px">
-    <mat-grid-tile [colspan]="2" [style.background]="'lightgreen'">
-        <span><H1>My Business</H1></span>
-    </mat-grid-tile>
-    <mat-grid-tile [style.background]="'lightgreen'">
-        <mat-form-field appearance="legacy">
-            <mat-label>Name</mat-label>
-            <textarea matInput></textarea>
-        </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile [style.background]="'lightgreen'">
-        <mat-form-field appearance="legacy">
-            <mat-label>Phone Number</mat-label>
-            <textarea matInput></textarea>
-        </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile [style.background]="'lightgreen'">
-        <mat-form-field appearance="legacy">
-            <mat-label>Address</mat-label>
-            <textarea matInput></textarea>
-        </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile [style.background]="'lightgreen'">
-        <mat-form-field appearance="legacy">
-            <mat-label>City</mat-label>
-            <textarea matInput></textarea>
-        </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile [style.background]="'lightgreen'">
-        <mat-form-field appearance="legacy">
-            <mat-label>Pincode</mat-label>
-            <textarea matInput></textarea>
-        </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile [style.background]="'lightgreen'">
-        <mat-form-field appearance="legacy">
-            <mat-label>GSTIN</mat-label>
-            <textarea matInput></textarea>
-        </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile [style.background]="'lightgreen'">
-        <mat-form-field appearance="legacy">
-            <mat-label>Currency</mat-label>
-            <textarea matInput></textarea>
-        </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile [style.background]="'lightgreen'">
-    </mat-grid-tile>
-    <mat-grid-tile [style.background]="'lightgreen'">
-        <button style="width:200px" (click)="addMyBusiness($event)" mat-raised-button>Submit</button>
-    </mat-grid-tile>
-    <mat-grid-tile [style.background]="'lightgreen'">
-        <button style="width:200px" mat-raised-button>Cancel</button>
-    </mat-grid-tile>
-</mat-grid-list>
-
-
-<div class="container">
-    <button style="width:200px" routerLink="/home" mat-raised-button>Home Page</button>
-</div>
+<form [formGroup]="myBusinessForm" (ngSubmit)="onSubmit()">
+    <mat-grid-list cols="2" rowHeight="150px">
+        <mat-grid-tile [colspan]="2" [style.background]="'lightgreen'">
+            <span><H1>My Business</H1></span>
+        </mat-grid-tile>
+        <mat-grid-tile [style.background]="'lightgreen'">
+            <mat-form-field appearance="legacy">
+                <mat-label>Name</mat-label>
+                <textarea formControlName="name" matInput></textarea>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [style.background]="'lightgreen'">
+            <mat-form-field appearance="legacy">
+                <mat-label>Phone Number</mat-label>
+                <textarea formControlName="phoneNumber" matInput></textarea>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [style.background]="'lightgreen'">
+            <mat-form-field appearance="legacy">
+                <mat-label>Address</mat-label>
+                <textarea formControlName="address" matInput></textarea>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [style.background]="'lightgreen'">
+            <mat-form-field appearance="legacy">
+                <mat-label>City</mat-label>
+                <textarea formControlName="city" matInput></textarea>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [style.background]="'lightgreen'">
+            <mat-form-field appearance="legacy">
+                <mat-label>Pincode</mat-label>
+                <textarea formControlName="pincode" matInput></textarea>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [style.background]="'lightgreen'">
+            <mat-form-field appearance="legacy">
+                <mat-label>GSTIN</mat-label>
+                <textarea formControlName="gstin" matInput></textarea>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [style.background]="'lightgreen'">
+            <mat-form-field appearance="legacy">
+                <mat-label>Currency</mat-label>
+                <textarea formControlName="currency" matInput></textarea>
+            </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [style.background]="'lightgreen'">
+        </mat-grid-tile>
+        <mat-grid-tile [style.background]="'lightgreen'">
+            <button mat-raised-button style="width:200px" type="submit" [disabled]="!myBusinessForm.valid">Submit</button>
+        </mat-grid-tile>
+        <mat-grid-tile [style.background]="'lightgreen'">
+            <button style="width:200px" routerLink="/home" mat-raised-button>Cancel</button>
+        </mat-grid-tile>
+    </mat-grid-list>
+</form>

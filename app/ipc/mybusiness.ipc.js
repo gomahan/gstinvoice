@@ -46,27 +46,54 @@ var MybusinessIPC = /** @class */ (function () {
     }
     MybusinessIPC.prototype.listen = function () {
         var _this = this;
-        electron_1.ipcMain.on('add-mybusiness', function (event, _mybusiness) { return __awaiter(_this, void 0, void 0, function () {
-            var mybusiness, _a, err_1;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
+        electron_1.ipcMain.on("add-mybusiness", function (event, _mybusiness) { return __awaiter(_this, void 0, void 0, function () {
+            var mybusiness, data, err_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
                     case 0:
-                        _b.trys.push([0, 4, , 5]);
+                        _a.trys.push([0, 4, , 5]);
+                        _mybusiness.id = 1;
                         return [4 /*yield*/, this._repo.create(_mybusiness)];
                     case 1:
-                        mybusiness = _b.sent();
+                        mybusiness = _a.sent();
                         return [4 /*yield*/, this._repo.save(mybusiness)];
                     case 2:
-                        _b.sent();
-                        _a = event;
-                        return [4 /*yield*/, this._repo.find()];
+                        _a.sent();
+                        return [4 /*yield*/, this._repo.find({
+                                where: [
+                                    { id: 1 }
+                                ]
+                            })];
                     case 3:
-                        _a.returnValue = _b.sent();
+                        data = _a.sent();
+                        event.returnValue = data && data.length > 0 ? data[0] : null;
                         return [3 /*break*/, 5];
                     case 4:
-                        err_1 = _b.sent();
+                        err_1 = _a.sent();
                         throw err_1;
                     case 5: return [2 /*return*/];
+                }
+            });
+        }); });
+        electron_1.ipcMain.on("get-mybusiness", function (event) { return __awaiter(_this, void 0, void 0, function () {
+            var data, err_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        return [4 /*yield*/, this._repo.find({
+                                where: [
+                                    { id: 1 }
+                                ]
+                            })];
+                    case 1:
+                        data = _a.sent();
+                        event.returnValue = data && data.length > 0 ? data[0] : null;
+                        return [3 /*break*/, 3];
+                    case 2:
+                        err_2 = _a.sent();
+                        throw err_2;
+                    case 3: return [2 /*return*/];
                 }
             });
         }); });

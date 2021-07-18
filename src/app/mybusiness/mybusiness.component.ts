@@ -1,36 +1,58 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { Mybusiness } from '../../assets/model/mybusiness.schema';
-import { ElectronService } from '../core/services/electron/electron.service';
+import { Component, OnInit } from "@angular/core";
+import { Observable, of, throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { Mybusiness } from "../../assets/model/mybusiness.schema";
+import { ElectronService } from "../core/services/electron/electron.service";
 
 @Component({
-  selector: 'app-mybusiness',
-  templateUrl: './mybusiness.component.html',
-  styleUrls: ['./mybusiness.component.scss']
+  selector: "app-mybusiness",
+  templateUrl: "./mybusiness.component.html",
+  styleUrls: ["./mybusiness.component.scss"],
 })
 export class MybusinessComponent implements OnInit {
 
-  constructor(private _electronService: ElectronService) {}
+  private myBusinessForm;
+
+  constructor(
+    private _electronService: ElectronService,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
-    console.log('MybusinessComponent INIT');
-   }
 
-   addMyBusiness(): Observable<Mybusiness[]> {
-    let mybusiness = new Mybusiness();
-    mybusiness.name="name";
-    mybusiness.phoneNumber="23232323";
-    mybusiness.pincode="232332";
-    mybusiness.address="adrfdaf/34/f.34";
-    mybusiness.city="chennai";
-    mybusiness.currency="Rs";
-    mybusiness.gstin="232322323";
+    this.myBusinessForm = new FormGroup({
+      name: new FormControl(''),
+      phoneNumber: new FormControl(''),
+      pincode: new FormControl(''),
+      address: new FormControl(''),
+      city: new FormControl(''),
+      currency: new FormControl(''),
+      gstin: new FormControl(''),
+    });
+  
 
-    return of(
-      this._electronService.ipcRenderer.sendSync('add-mybusiness', mybusiness)
-    ).pipe(catchError((error: any) => throwError(error.json)));
-    
+    this.loadValue();
   }
 
+  loadValue(){
+    of(this._electronService.ipcRenderer.sendSync('get-mybusiness')).subscribe(
+      (Mybusiness)=> {
+        console.log(Mybusiness);
+        this.myBusinessForm.patchValue(Mybusiness);
+      },
+      catchError((error: any) => throwError(error.json))
+    );
+    
+
+  }
+
+  onSubmit(): Observable<Mybusiness[]> {
+    let mybusiness = new Mybusiness();
+    Object.assign(mybusiness,this.myBusinessForm.value);
+
+    return of(
+      this._electronService.ipcRenderer.sendSync("add-mybusiness", mybusiness)
+    ).pipe(catchError((error: any) => throwError(error.json)));
+  }
 }
