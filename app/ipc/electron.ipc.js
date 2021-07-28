@@ -36,33 +36,53 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MybusinessIPC = void 0;
+exports.ElectronIPC = void 0;
+var typeorm_1 = require("typeorm");
 var electron_1 = require("electron");
 var mybusiness_schema_1 = require("../../src/assets/model/mybusiness.schema");
-var MybusinessIPC = /** @class */ (function () {
-    function MybusinessIPC(connection) {
-        this._connection = connection;
-        this._repo = connection.getRepository(mybusiness_schema_1.Mybusiness);
+var ElectronIPC = /** @class */ (function () {
+    function ElectronIPC() {
+        this._connection = typeorm_1.getConnection();
     }
-    MybusinessIPC.prototype.listen = function () {
+    ElectronIPC.prototype.getSchemaClass = function (schemaClassString) {
+        if (schemaClassString == 'Mybusiness') {
+            return mybusiness_schema_1.Mybusiness;
+        }
+    };
+    ElectronIPC.prototype.listen = function () {
         var _this = this;
-        electron_1.ipcMain.on("add-mybusiness", function (event, _mybusiness) { return __awaiter(_this, void 0, void 0, function () {
-            var mybusiness, data, err_1;
+        electron_1.ipcMain.on("getObjectProperties", function (event, schemaClassString) { return __awaiter(_this, void 0, void 0, function () {
+            var arrRes;
+            return __generator(this, function (_a) {
+                arrRes = [];
+                this._connection
+                    .getMetadata(this.getSchemaClass(schemaClassString))
+                    .ownColumns.forEach(function (cm) {
+                    var res = new Map();
+                    res.set("name", cm.propertyName);
+                    res.set("type", cm.type.toString().substring(9, cm.type.toString().indexOf("()")));
+                    arrRes.push(res);
+                });
+                event.returnValue = arrRes;
+                return [2 /*return*/];
+            });
+        }); });
+        electron_1.ipcMain.on("add", function (event, schemaClassString, insertObj) { return __awaiter(_this, void 0, void 0, function () {
+            var _repo, insertEntity, data, err_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
-                        _mybusiness.id = 1;
-                        return [4 /*yield*/, this._repo.create(_mybusiness)];
+                        insertObj.id = 1;
+                        _repo = this._connection.getRepository(this.getSchemaClass(schemaClassString));
+                        return [4 /*yield*/, _repo.create(insertObj)];
                     case 1:
-                        mybusiness = _a.sent();
-                        return [4 /*yield*/, this._repo.save(mybusiness)];
+                        insertEntity = _a.sent();
+                        return [4 /*yield*/, _repo.save(insertEntity)];
                     case 2:
                         _a.sent();
-                        return [4 /*yield*/, this._repo.find({
-                                where: [
-                                    { id: 1 }
-                                ]
+                        return [4 /*yield*/, _repo.find({
+                                where: [{ id: 1 }],
                             })];
                     case 3:
                         data = _a.sent();
@@ -75,16 +95,15 @@ var MybusinessIPC = /** @class */ (function () {
                 }
             });
         }); });
-        electron_1.ipcMain.on("get-mybusiness", function (event) { return __awaiter(_this, void 0, void 0, function () {
-            var data, err_2;
+        electron_1.ipcMain.on("get", function (event, schemaClassString) { return __awaiter(_this, void 0, void 0, function () {
+            var _repo, data, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        return [4 /*yield*/, this._repo.find({
-                                where: [
-                                    { id: 1 }
-                                ]
+                        _repo = this._connection.getRepository(this.getSchemaClass(schemaClassString));
+                        return [4 /*yield*/, _repo.find({
+                                where: [{ id: 1 }],
                             })];
                     case 1:
                         data = _a.sent();
@@ -98,7 +117,7 @@ var MybusinessIPC = /** @class */ (function () {
             });
         }); });
     };
-    return MybusinessIPC;
+    return ElectronIPC;
 }());
-exports.MybusinessIPC = MybusinessIPC;
-//# sourceMappingURL=mybusiness.ipc.js.map
+exports.ElectronIPC = ElectronIPC;
+//# sourceMappingURL=electron.ipc.js.map

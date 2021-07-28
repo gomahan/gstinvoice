@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Observable, of, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
-import { Mybusiness } from "../../assets/model/mybusiness.schema";
+import { FormControl, FormGroup } from "@angular/forms";
 import { ElectronService } from "../core/services/electron/electron.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: "app-mybusiness",
@@ -12,34 +12,50 @@ import { ElectronService } from "../core/services/electron/electron.service";
 })
 export class MybusinessComponent implements OnInit {
 
-  private myBusinessForm;
+  public myForm;
+  public schemaClass;
+  public schemaClassString;
+  public metaData;
+  public heading;
 
   constructor(
     private _electronService: ElectronService,
-    private formBuilder: FormBuilder
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit(): void {
 
-    this.myBusinessForm = new FormGroup({
-      name: new FormControl(''),
-      phoneNumber: new FormControl(''),
-      pincode: new FormControl(''),
-      address: new FormControl(''),
-      city: new FormControl(''),
-      currency: new FormControl(''),
-      gstin: new FormControl(''),
-    });
+    this.route.data.subscribe(data => {
+      this.schemaClass=data.schemaClass;
+      this.heading = data.heading;
+      this.schemaClassString = data.schemaClassString;
+    })
+
+    of(this._electronService.ipcRenderer.sendSync('getObjectProperties',this.schemaClassString)).subscribe(
+      (Myobject)=> {
+        this.metaData=Myobject;
+      });
+    
+    //;
+
+    
+    
+    let fgjson={};
+
+    for (var field of this.metaData) {
+      fgjson[field.get("name")] = new FormControl('');
+    }
+    this.myForm = new FormGroup(fgjson);
   
 
     this.loadValue();
   }
 
   loadValue(){
-    of(this._electronService.ipcRenderer.sendSync('get-mybusiness')).subscribe(
-      (Mybusiness)=> {
-        console.log(Mybusiness);
-        this.myBusinessForm.patchValue(Mybusiness);
+    of(this._electronService.ipcRenderer.sendSync('get',this.schemaClassString)).subscribe(
+      (Myobject)=> {
+        console.log(Myobject);
+        this.myForm.patchValue(Myobject);
       },
       catchError((error: any) => throwError(error.json))
     );
@@ -47,12 +63,13 @@ export class MybusinessComponent implements OnInit {
 
   }
 
-  onSubmit(): Observable<Mybusiness[]> {
-    let mybusiness = new Mybusiness();
-    Object.assign(mybusiness,this.myBusinessForm.value);
+  onSubmit(): Observable<any[]> {
+    console.debug(this.schemaClass);
+    let myObject = new this.schemaClass();
+    Object.assign(myObject,this.myForm.value);
 
     return of(
-      this._electronService.ipcRenderer.sendSync("add-mybusiness", mybusiness)
+      this._electronService.ipcRenderer.sendSync('add',this.schemaClassString,myObject)
     ).pipe(catchError((error: any) => throwError(error.json)));
   }
 }

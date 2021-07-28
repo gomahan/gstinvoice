@@ -2,9 +2,9 @@ import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as url from 'url';
-import { MybusinessIPC } from './ipc/mybusiness.ipc';
 import { createConnection } from 'typeorm';
 import { Mybusiness } from '../src/assets/model/mybusiness.schema';
+import { ElectronIPC } from './ipc/electron.ipc';
 
 // Initialize remote module
 require('@electron/remote/main').initialize();
@@ -19,6 +19,7 @@ const args = process.argv.slice(1),
   const size = electronScreen.getPrimaryDisplay().workAreaSize;
 
   const connection = await createConnection({
+    name: 'default',
     type: 'sqlite',
     synchronize: true,
     logging: true,
@@ -27,7 +28,7 @@ const args = process.argv.slice(1),
     entities: [ Mybusiness ],
   });
 
-  new MybusinessIPC(connection).listen();
+  new ElectronIPC().listen();
   
   // Create the browser window.
   win = new BrowserWindow({
