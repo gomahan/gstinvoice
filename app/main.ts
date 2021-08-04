@@ -1,10 +1,11 @@
 import { app, BrowserWindow, screen } from 'electron';
+import { SchemaManager } from './schemaManager';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as url from 'url';
 import { createConnection } from 'typeorm';
-import { Mybusiness } from '../src/assets/model/mybusiness.schema';
 import { ElectronIPC } from './ipc/electron.ipc';
+
 
 // Initialize remote module
 require('@electron/remote/main').initialize();
@@ -25,7 +26,7 @@ const args = process.argv.slice(1),
     logging: true,
     logger: 'simple-console',
     database: './src/assets/data/database.sqlite',
-    entities: [ Mybusiness ],
+    entities: SchemaManager.getEntities(),
   });
 
   new ElectronIPC().listen();

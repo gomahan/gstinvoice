@@ -1,5 +1,7 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
+
+
 @Entity()
 export class Mybusiness
 {
@@ -28,3 +30,5 @@ export class Mybusiness
 	currency: string;
     
 }
+
+

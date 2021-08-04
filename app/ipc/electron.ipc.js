@@ -39,16 +39,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ElectronIPC = void 0;
 var typeorm_1 = require("typeorm");
 var electron_1 = require("electron");
-var mybusiness_schema_1 = require("../../src/assets/model/mybusiness.schema");
+var schemaManager_1 = require("../schemaManager");
 var ElectronIPC = /** @class */ (function () {
     function ElectronIPC() {
         this._connection = typeorm_1.getConnection();
     }
-    ElectronIPC.prototype.getSchemaClass = function (schemaClassString) {
-        if (schemaClassString == 'Mybusiness') {
-            return mybusiness_schema_1.Mybusiness;
-        }
-    };
     ElectronIPC.prototype.listen = function () {
         var _this = this;
         electron_1.ipcMain.on("getObjectProperties", function (event, schemaClassString) { return __awaiter(_this, void 0, void 0, function () {
@@ -56,7 +51,7 @@ var ElectronIPC = /** @class */ (function () {
             return __generator(this, function (_a) {
                 arrRes = [];
                 this._connection
-                    .getMetadata(this.getSchemaClass(schemaClassString))
+                    .getMetadata(schemaManager_1.SchemaManager.getSchemaClass(schemaClassString))
                     .ownColumns.forEach(function (cm) {
                     var res = new Map();
                     res.set("name", cm.propertyName);
@@ -74,7 +69,7 @@ var ElectronIPC = /** @class */ (function () {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
                         insertObj.id = 1;
-                        _repo = this._connection.getRepository(this.getSchemaClass(schemaClassString));
+                        _repo = this._connection.getRepository(schemaManager_1.SchemaManager.getSchemaClass(schemaClassString));
                         return [4 /*yield*/, _repo.create(insertObj)];
                     case 1:
                         insertEntity = _a.sent();
@@ -101,7 +96,7 @@ var ElectronIPC = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
-                        _repo = this._connection.getRepository(this.getSchemaClass(schemaClassString));
+                        _repo = this._connection.getRepository(schemaManager_1.SchemaManager.getSchemaClass(schemaClassString));
                         return [4 /*yield*/, _repo.find({
                                 where: [{ id: 1 }],
                             })];

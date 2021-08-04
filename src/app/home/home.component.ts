@@ -11,14 +11,11 @@ export class HomeComponent implements OnInit {
   tiles: Tile[] = [
     {text: 'GST Invoice', cols: 3, rows: 1, color: 'lightgreen',button:false},
     {text: 'My Business', cols: 1, rows: 1, color: 'lightgreen',routeLink:'/Mybusiness'},
-    {text: 'My Business Bank', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Our GST Info', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Create Product', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Create Customer', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Create Invoice', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Edit Product', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Edit Customer', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Edit Invoice', cols: 1, rows: 1, color: 'lightgreen'},
+    {text: 'My Business Bank', cols: 1, rows: 1, color: 'lightgreen',routeLink:'/Mybusinessbank'},
+    {text: 'Our GST Info', cols: 1, rows: 1, color: 'lightgreen',routeLink:'/Ourgstinfo'},
+    {text: 'Create/Edit Product', cols: 1, rows: 1, color: 'lightgreen'},
+    {text: 'Create/Edit Customer', cols: 1, rows: 1, color: 'lightgreen'},
+    {text: 'Create/Edit Invoice', cols: 1, rows: 1, color: 'lightgreen'},
     {text: 'Download Invoice', cols: 3, rows: 1, color: 'lightgreen'},
   ];
 

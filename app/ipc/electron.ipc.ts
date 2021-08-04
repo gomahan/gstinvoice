@@ -1,6 +1,7 @@
 import { Connection, getConnection} from "typeorm";
 import { ipcMain } from "electron";
 import { Mybusiness } from "../../src/assets/model/mybusiness.schema";
+import { SchemaManager } from "../schemaManager";
 
 export class ElectronIPC {
   private _connection: Connection;
@@ -10,19 +11,13 @@ export class ElectronIPC {
     this._connection = getConnection();
   }
   
-  getSchemaClass(schemaClassString:String){
-    if(schemaClassString == 'Mybusiness')
-    {
-      return Mybusiness;
-    }
-  }
 
   listen() {
     ipcMain.on("getObjectProperties", async (event: any,schemaClassString:String) => {
       var arrRes=[];
       
       this._connection
-        .getMetadata(this.getSchemaClass(schemaClassString))
+        .getMetadata(SchemaManager.getSchemaClass(schemaClassString))
         .ownColumns.forEach(function (cm) {
           var res= new Map();
           res.set("name",cm.propertyName); 
@@ -37,7 +32,7 @@ export class ElectronIPC {
       async (event: any, schemaClassString:String,insertObj: any) => {
         try {
           insertObj.id = 1;
-          var _repo = this._connection.getRepository(this.getSchemaClass(schemaClassString));
+          var _repo = this._connection.getRepository(SchemaManager.getSchemaClass(schemaClassString));
           const insertEntity = await _repo.create(insertObj);
           await _repo.save(insertEntity);
           var data = await _repo.find({
@@ -52,7 +47,7 @@ export class ElectronIPC {
 
     ipcMain.on("get", async (event: any,schemaClassString:String) => {
       try {
-        var _repo = this._connection.getRepository(this.getSchemaClass(schemaClassString));
+        var _repo = this._connection.getRepository(SchemaManager.getSchemaClass(schemaClassString));
         var data = await _repo.find({
           where: [{ id: 1 }],
         });
