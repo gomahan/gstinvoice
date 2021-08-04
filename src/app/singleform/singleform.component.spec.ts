@@ -1,23 +1,23 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
-import { MybusinessComponent } from './mybusiness.component';
+import { SingleformComponent } from './singleform.component';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { RouterTestingModule } from '@angular/router/testing';
 
-describe('MybusinessComponent', () => {
-  let component: MybusinessComponent;
-  let fixture: ComponentFixture<MybusinessComponent>;
+describe('SingleformComponent', () => {
+  let component: SingleformComponent;
+  let fixture: ComponentFixture<SingleformComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [MybusinessComponent],
+      declarations: [SingleformComponent],
       imports: [TranslateModule.forRoot(), RouterTestingModule]
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MybusinessComponent);
+    fixture = TestBed.createComponent(SingleformComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

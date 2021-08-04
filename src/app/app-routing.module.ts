@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './shared/components';
 
 import { HomeRoutingModule } from './home/home-routing.module';
-import { MybusinessRoutingModule } from './mybusiness/mybusiness-routing.module';
+import { SingleformRoutingModule } from './singleform/singleform-routing.module';
 
 const routes: Routes = [
   {
@@ -21,7 +21,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }),
     HomeRoutingModule,
-    MybusinessRoutingModule
+    SingleformRoutingModule
   ],
   exports: [RouterModule]
 })

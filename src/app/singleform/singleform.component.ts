@@ -6,11 +6,11 @@ import { ElectronService } from "../core/services/electron/electron.service";
 import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: "app-mybusiness",
-  templateUrl: "./mybusiness.component.html",
-  styleUrls: ["./mybusiness.component.scss"],
+  selector: "app-singleform",
+  templateUrl: "./singleform.component.html",
+  styleUrls: ["./singleform.component.scss"],
 })
-export class MybusinessComponent implements OnInit {
+export class SingleformComponent implements OnInit {
 
   public myForm;
   public schemaClass;

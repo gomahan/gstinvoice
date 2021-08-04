@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { MybusinessComponent } from './mybusiness.component';
+import { SingleformComponent } from './singleform.component';
 import { Mybusiness } from "../../assets/model/mybusiness.schema";
 import { Mybusinessbank } from "../../assets/model/Mybusinessbank.schema";
 import { Ourgstinfo } from "../../assets/model/Ourgstinfo.schema";
@@ -10,7 +10,7 @@ import { Ourgstinfo } from "../../assets/model/Ourgstinfo.schema";
 const routes: Routes = [
   {
     path: 'Mybusiness',
-    component: MybusinessComponent,
+    component: SingleformComponent,
     data : {
         schemaClass : Mybusiness,
         schemaClassString : "Mybusiness",
@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: 'Mybusinessbank',
-    component: MybusinessComponent,
+    component: SingleformComponent,
     data : {
         schemaClass : Mybusinessbank,
         schemaClassString : "Mybusinessbank",
@@ -28,7 +28,7 @@ const routes: Routes = [
   },
   {
     path: 'Ourgstinfo',
-    component: MybusinessComponent,
+    component: SingleformComponent,
     data : {
         schemaClass : Ourgstinfo,
         schemaClassString : "Ourgstinfo",
@@ -42,4 +42,4 @@ const routes: Routes = [
   imports: [CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MybusinessRoutingModule {}
+export class SingleformRoutingModule {}
