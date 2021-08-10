@@ -52,7 +52,7 @@ export class SingleformComponent implements OnInit {
   }
 
   loadValue(){
-    of(this._electronService.ipcRenderer.sendSync('get',this.schemaClassString)).subscribe(
+    of(this._electronService.ipcRenderer.sendSync('get',this.schemaClassString,1)).subscribe(
       (Myobject)=> {
         console.log(Myobject);
         this.myForm.patchValue(Myobject);
@@ -67,6 +67,7 @@ export class SingleformComponent implements OnInit {
     console.debug(this.schemaClass);
     let myObject = new this.schemaClass();
     Object.assign(myObject,this.myForm.value);
+    myObject.id = 1;
 
     return of(
       this._electronService.ipcRenderer.sendSync('add',this.schemaClassString,myObject)

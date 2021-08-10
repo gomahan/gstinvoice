@@ -31,7 +31,6 @@ export class ElectronIPC {
       "add",
       async (event: any, schemaClassString:String,insertObj: any) => {
         try {
-          insertObj.id = 1;
           var _repo = this._connection.getRepository(SchemaManager.getSchemaClass(schemaClassString));
           const insertEntity = await _repo.create(insertObj);
           await _repo.save(insertEntity);
@@ -45,17 +44,36 @@ export class ElectronIPC {
       }
     );
 
-    ipcMain.on("get", async (event: any,schemaClassString:String) => {
+    
+
+    ipcMain.on("getAll", async (event: any,schemaClassString:String) => {
       try {
         var _repo = this._connection.getRepository(SchemaManager.getSchemaClass(schemaClassString));
+        var data = await _repo.find();
+        event.returnValue = data;
+      } catch (err) {
+        throw err;
+      }
+    });
+
+
+   
+
+    ipcMain.on("get", async (event: any,schemaClassString:String,id:any) => {
+      try {
+        var _repo = this._connection.getRepository(SchemaManager.getSchemaClass(schemaClassString));
+        
         var data = await _repo.find({
-          where: [{ id: 1 }],
+          where: [{ id: id }],
         });
         event.returnValue = data && data.length > 0 ? data[0] : null;
       } catch (err) {
         throw err;
       }
     });
+
+
+
   }
 }
 

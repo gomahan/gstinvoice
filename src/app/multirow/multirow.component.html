@@ -1,0 +1,7 @@
+<mat-list>
+    <mat-list-item [style.background]="'lightgreen'" *ngFor="let row of data">
+        <span [style.color]="'black'" *ngFor="let field of metaData">
+            {{row[field.get('name')]}}
+        </span>
+    </mat-list-item>
+</mat-list>

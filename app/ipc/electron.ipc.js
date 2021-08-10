@@ -68,7 +68,6 @@ var ElectronIPC = /** @class */ (function () {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 4, , 5]);
-                        insertObj.id = 1;
                         _repo = this._connection.getRepository(schemaManager_1.SchemaManager.getSchemaClass(schemaClassString));
                         return [4 /*yield*/, _repo.create(insertObj)];
                     case 1:
@@ -90,23 +89,42 @@ var ElectronIPC = /** @class */ (function () {
                 }
             });
         }); });
-        electron_1.ipcMain.on("get", function (event, schemaClassString) { return __awaiter(_this, void 0, void 0, function () {
+        electron_1.ipcMain.on("getAll", function (event, schemaClassString) { return __awaiter(_this, void 0, void 0, function () {
             var _repo, data, err_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         _a.trys.push([0, 2, , 3]);
                         _repo = this._connection.getRepository(schemaManager_1.SchemaManager.getSchemaClass(schemaClassString));
+                        return [4 /*yield*/, _repo.find()];
+                    case 1:
+                        data = _a.sent();
+                        event.returnValue = data;
+                        return [3 /*break*/, 3];
+                    case 2:
+                        err_2 = _a.sent();
+                        throw err_2;
+                    case 3: return [2 /*return*/];
+                }
+            });
+        }); });
+        electron_1.ipcMain.on("get", function (event, schemaClassString, id) { return __awaiter(_this, void 0, void 0, function () {
+            var _repo, data, err_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        _a.trys.push([0, 2, , 3]);
+                        _repo = this._connection.getRepository(schemaManager_1.SchemaManager.getSchemaClass(schemaClassString));
                         return [4 /*yield*/, _repo.find({
-                                where: [{ id: 1 }],
+                                where: [{ id: id }],
                             })];
                     case 1:
                         data = _a.sent();
                         event.returnValue = data && data.length > 0 ? data[0] : null;
                         return [3 /*break*/, 3];
                     case 2:
-                        err_2 = _a.sent();
-                        throw err_2;
+                        err_3 = _a.sent();
+                        throw err_3;
                     case 3: return [2 /*return*/];
                 }
             });

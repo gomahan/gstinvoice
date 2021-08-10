@@ -14,6 +14,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 import { HomeModule } from './home/home.module';
 import { SingleformModule } from './singleform/singleform.module';
+import { MultirowModule } from './multirow/multirow.module';
 
 
 import { AppComponent } from './app.component';
@@ -33,6 +34,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new Transl
     SharedModule,
     HomeModule,
     SingleformModule,
+    MultirowModule,
     AppRoutingModule,
     TranslateModule.forRoot({
       loader: {
