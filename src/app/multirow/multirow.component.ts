@@ -2,7 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { of, throwError } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { ElectronService } from "../core/services/electron/electron.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: "app-multirow",
@@ -15,10 +16,14 @@ export class MultirowComponent implements OnInit {
   public metaData;
   public heading;
   public data;
+  public dataSource;
+  public displayedColumns=['action'];
+  
 
   constructor(
     private _electronService: ElectronService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private navRoute: Router,
   ) {}
 
   ngOnInit(): void {
@@ -35,6 +40,11 @@ export class MultirowComponent implements OnInit {
       )
     ).subscribe((Myobject) => {
       this.metaData = Myobject;
+
+      for (var field of this.metaData) {
+        this.displayedColumns.push(field.get("name"));
+      }
+      
     });
     this.loadValue();
   }
@@ -49,8 +59,19 @@ export class MultirowComponent implements OnInit {
     ).subscribe(
       (Myobject) => {
         this.data = Myobject;
+        this.dataSource = new MatTableDataSource<any>(this.data);
       },
       catchError((error: any) => throwError(error.json))
     );
+  }
+
+  startEdit(record:any){
+    this.navRoute.navigate(['/Myproduct'],{ queryParams: { id: record.id } })
+  }
+
+  startAdd(){
+    var maxId = Math.max.apply(Math,this.data.map(function(o){return o.id;}))
+    var newId = maxId+1;
+    this.navRoute.navigate(['/Myproduct'],{ queryParams: { id: newId } })
   }
 }

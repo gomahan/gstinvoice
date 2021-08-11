@@ -2,15 +2,17 @@ import { NgModule } from "@angular/core";
 
 import { MatSliderModule } from "@angular/material/slider";
 import { MatGridListModule } from "@angular/material/grid-list";
+import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
-import { MatTableModule } from '@angular/material/table';
+import { MatTableModule } from "@angular/material/table";
 
 const Mat = [
   MatSliderModule,
   MatGridListModule,
+  MatIconModule,
   MatButtonModule,
   MatFormFieldModule,
   MatInputModule,

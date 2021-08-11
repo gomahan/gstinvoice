@@ -5,7 +5,7 @@ import { SingleformComponent } from './singleform.component';
 import { Mybusiness } from "../../assets/model/mybusiness.schema";
 import { Mybusinessbank } from "../../assets/model/Mybusinessbank.schema";
 import { Ourgstinfo } from "../../assets/model/Ourgstinfo.schema";
-
+import { Myproduct } from '../../assets/model/myproduct.schema';
 
 const routes: Routes = [
   {
@@ -34,7 +34,16 @@ const routes: Routes = [
         schemaClassString : "Ourgstinfo",
         heading: 'Our Gst Info'
     }
-  }
+  },
+  {
+    path: 'Myproduct',
+    component: SingleformComponent,
+    data : {
+        schemaClass : Myproduct,
+        schemaClassString : "Myproduct",
+        heading: 'My Products'
+    }
+  },
 ];
 
 @NgModule({
