@@ -15,10 +15,12 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HomeModule } from './home/home.module';
 import { SingleformModule } from './singleform/singleform.module';
 import { MultirowModule } from './multirow/multirow.module';
+import { InvoiceModule } from './invoice/invoice.module';
 
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { InvoicetableModule } from './invoicetable/invoicetable.module';
 
 
 // AoT requires an exported function for factories
@@ -35,6 +37,8 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new Transl
     HomeModule,
     SingleformModule,
     MultirowModule,
+    InvoiceModule,
+    InvoicetableModule,
     AppRoutingModule,
     TranslateModule.forRoot({
       loader: {

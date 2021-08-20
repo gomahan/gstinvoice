@@ -13,9 +13,10 @@ import { MatTableDataSource } from '@angular/material/table';
 export class MultirowComponent implements OnInit {
   public schemaClass;
   public schemaClassString;
+  public editpath;
   public metaData;
   public heading;
-  public data;
+  public data=[];
   public dataSource;
   public displayedColumns=['action'];
   
@@ -31,6 +32,7 @@ export class MultirowComponent implements OnInit {
       this.schemaClass = data.schemaClass;
       this.heading = data.heading;
       this.schemaClassString = data.schemaClassString;
+      this.editpath = data.editpath;
     });
 
     of(
@@ -66,12 +68,15 @@ export class MultirowComponent implements OnInit {
   }
 
   startEdit(record:any){
-    this.navRoute.navigate(['/Myproduct'],{ queryParams: { id: record.id } })
+    this.navRoute.navigate(['/'+this.editpath],{ queryParams: { id: record.id } })
   }
 
   startAdd(){
-    var maxId = Math.max.apply(Math,this.data.map(function(o){return o.id;}))
-    var newId = maxId+1;
-    this.navRoute.navigate(['/Myproduct'],{ queryParams: { id: newId } })
+    var newId =1;
+    if(this.data && this.data.length>0){
+      var maxId = Math.max.apply(Math,this.data.map(function(o){return o.id;}))
+      newId = maxId+1;
+    }
+    this.navRoute.navigate(['/'+this.editpath],{ queryParams: { id: newId } })
   }
 }

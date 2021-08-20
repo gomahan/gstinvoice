@@ -6,6 +6,7 @@ import { Mybusiness } from "../../assets/model/mybusiness.schema";
 import { Mybusinessbank } from "../../assets/model/Mybusinessbank.schema";
 import { Ourgstinfo } from "../../assets/model/Ourgstinfo.schema";
 import { Myproduct } from '../../assets/model/myproduct.schema';
+import { Mycustomer } from '../../assets/model/mycustomer.schema';
 
 const routes: Routes = [
   {
@@ -42,6 +43,15 @@ const routes: Routes = [
         schemaClass : Myproduct,
         schemaClassString : "Myproduct",
         heading: 'My Products'
+    }
+  },
+  {
+    path: 'Mycustomer',
+    component: SingleformComponent,
+    data : {
+        schemaClass : Mycustomer,
+        schemaClassString : "Mycustomer",
+        heading: 'My Customers'
     }
   },
 ];

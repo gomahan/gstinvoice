@@ -1,10 +1,12 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, MenuItem, screen } from 'electron';
 import { SchemaManager } from './schemaManager';
 import * as path from 'path';
+import * as os from 'os';
 import * as fs from 'fs';
 import * as url from 'url';
 import { createConnection } from 'typeorm';
 import { ElectronIPC } from './ipc/electron.ipc';
+import { Menu } from 'electron';
 
 
 // Initialize remote module
@@ -67,6 +69,26 @@ const args = process.argv.slice(1),
       slashes: true
     }));
   }
+
+  let defaultMenu = Menu.getApplicationMenu()
+
+  let newMenu = new Menu();
+  defaultMenu.items
+    .filter(x => x.role != 'help')
+    .forEach(x => {
+        newMenu.append(x);
+    })
+  newMenu.append(new MenuItem({
+    label: 'Print',
+    click: async () => {
+      let win = BrowserWindow.getFocusedWindow();
+      win.webContents.print({
+        printBackground:true
+      });
+  }
+  }));
+
+  Menu.setApplicationMenu(newMenu);
 
   // Emitted when the window is closed.
   win.on('closed', () => {

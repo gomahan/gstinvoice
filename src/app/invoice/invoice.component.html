@@ -1,0 +1,28 @@
+<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <mat-grid-list cols="2" rowHeight="150px">
+        <mat-grid-tile [colspan]="2" [style.background]="'lightgreen'">
+            <span>
+                <H1>{{heading}}</H1>
+            </span>
+        </mat-grid-tile>
+        <span *ngFor="let fmfield of metaData ; let last = last ; let odd = odd" [ngSwitch]="fmfield.get('type')">
+        <mat-grid-tile *ngIf="fmfield.get('type') == 'String'" [style.background]="'lightgreen'">
+            <mat-form-field appearance="legacy">
+                <mat-label>{{fmfield.get('name')}}</mat-label>
+                <textarea *ngSwitchCase="'String'" [formControlName]="fmfield.get('name')" matInput></textarea>
+            </mat-form-field>
+        </mat-grid-tile>
+        <span *ngIf="last && odd">
+            <mat-grid-tile [style.background]="'lightgreen'">
+            </mat-grid-tile>
+        </span>
+        </span>
+
+        <mat-grid-tile [style.background]="'lightgreen'">
+            <button mat-raised-button style="width:200px" type="submit" [disabled]="!myForm.valid">Submit</button>
+        </mat-grid-tile>
+        <mat-grid-tile [style.background]="'lightgreen'">
+            <button style="width:200px" routerLink="/home" mat-raised-button>Cancel</button>
+        </mat-grid-tile>
+    </mat-grid-list>
+</form>

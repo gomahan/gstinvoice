@@ -1,0 +1,18 @@
+:host {
+    table {
+        width: 100%;
+    }
+    .mat-cell {
+        border-right: 1px solid currentColor;
+        padding-left: 5px;
+    }
+    .mat-header-cell {
+        border-right: 1px solid currentColor;
+        padding-left: 5px;
+        text-align: center;
+    }
+    .mat-column-action {
+        width: 100px;
+        text-align: center;
+    }
+}

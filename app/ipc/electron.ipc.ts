@@ -18,7 +18,7 @@ export class ElectronIPC {
       
       this._connection
         .getMetadata(SchemaManager.getSchemaClass(schemaClassString))
-        .ownColumns.forEach(function (cm) {
+        .columns.forEach(function (cm) {
           var res= new Map();
           res.set("name",cm.propertyName); 
           res.set("type",cm.type.toString().substring(9,cm.type.toString().indexOf("()"))); 

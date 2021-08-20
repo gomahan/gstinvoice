@@ -52,7 +52,7 @@ var ElectronIPC = /** @class */ (function () {
                 arrRes = [];
                 this._connection
                     .getMetadata(schemaManager_1.SchemaManager.getSchemaClass(schemaClassString))
-                    .ownColumns.forEach(function (cm) {
+                    .columns.forEach(function (cm) {
                     var res = new Map();
                     res.set("name", cm.propertyName);
                     res.set("type", cm.type.toString().substring(9, cm.type.toString().indexOf("()")));

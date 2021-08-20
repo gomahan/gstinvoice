@@ -14,9 +14,8 @@ export class HomeComponent implements OnInit {
     {text: 'My Business Bank', cols: 1, rows: 1, color: 'lightgreen',routeLink:'/Mybusinessbank'},
     {text: 'Our GST Info', cols: 1, rows: 1, color: 'lightgreen',routeLink:'/Ourgstinfo'},
     {text: 'Create/Edit Product', cols: 1, rows: 1, color: 'lightgreen',routeLink:'/Myproducts'},
-    {text: 'Create/Edit Customer', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Create/Edit Invoice', cols: 1, rows: 1, color: 'lightgreen'},
-    {text: 'Download Invoice', cols: 3, rows: 1, color: 'lightgreen'},
+    {text: 'Create/Edit Customer', cols: 1, rows: 1, color: 'lightgreen',routeLink:'/Mycustomers'},
+    {text: 'Create/Edit Invoice', cols: 1, rows: 1, color: 'lightgreen',routeLink:'/Myinvoices'},
   ];
 
   constructor(private router: Router) { }
